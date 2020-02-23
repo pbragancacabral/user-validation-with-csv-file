@@ -15,6 +15,7 @@ public class UserLoginApplication {
 			
 			if (userLoginService.isUserValid(username, password)) {
 				welcome(username);
+				break;
 			} else {
 				if (attempts == MAX_ATTEMPTS) {
 					userInterface.displayMessage("Too many failed login attempts, you are now locked out.");
