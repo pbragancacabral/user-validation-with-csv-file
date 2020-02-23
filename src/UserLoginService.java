@@ -57,7 +57,7 @@ public class UserLoginService {
 		User[] users = getUsers();
 		for (User user : users) {
 			if (user.getUsername().equalsIgnoreCase(username) && 
-					user.getPassword().equalsIgnoreCase(password)) {
+					user.getPassword().equals(password)) {
 				isValid = true;
 			}
 		}
