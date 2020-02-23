@@ -5,6 +5,8 @@ import java.io.IOException;
 
 public class UserLoginService {
 	
+	private static final String FILENAME = "data.txt";
+
 	public User getUser(String username) throws Exception {
 		User[] users = getUsers();
 		for (User user : users) {
@@ -19,7 +21,7 @@ public class UserLoginService {
 		User[] users = new User[4];
 		BufferedReader bufferedReader = null;
 		try {
-			FileReader fileReader = new FileReader("data.txt");
+			FileReader fileReader = new FileReader(FILENAME);
 			bufferedReader = new BufferedReader(fileReader);
 			String line;
 			int i = 0;
