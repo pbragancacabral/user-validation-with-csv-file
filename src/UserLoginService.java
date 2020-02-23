@@ -4,6 +4,16 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class UserLoginService {
+	
+	public User getUser(String username) throws Exception {
+		User[] users = getUsers();
+		for (User user : users) {
+			if (user.getUsername().equalsIgnoreCase(username)) {
+				return user;
+			}
+		}
+		throw new Exception("User not found.");
+	}
 
 	private User[] getUsers() {
 		User[] users = new User[4];
@@ -17,15 +27,15 @@ public class UserLoginService {
 				users[i] = createUserFromString(line);
 				i++;
 			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (FileNotFoundException fnfe) {
+			fnfe.printStackTrace();
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
 		} finally {
 			try {
 				bufferedReader.close();
-			} catch (IOException e) {
-				e.printStackTrace();
+			} catch (IOException ioe) {
+				ioe.printStackTrace();
 			}
 		}
 		return users;

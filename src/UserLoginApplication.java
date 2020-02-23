@@ -1,26 +1,37 @@
-import java.util.Scanner;
-
 public class UserLoginApplication {
 
+	private static UserLoginService userLoginService = new UserLoginService();
+	private static UserInterface userInterface = new UserInterface();
+	
+	private static int MAX_ATTEMPTS = 5;
+	
 	public static void main(String[] args) {
-		UserLoginService userLoginService = new UserLoginService();
 		int attempts = 0;
-		int maxAttempts = 2;
-		while (attempts < maxAttempts) {
-			System.out.print("Username: ");
-			String username = new Scanner(System.in).nextLine();
-			System.out.print("Password: ");
-			String password = new Scanner(System.in).nextLine();
+		
+		while (attempts < MAX_ATTEMPTS) {
+			String username = userInterface.promptUsername();
+			String password = userInterface.promptPassword();
 			attempts++;
+			
 			if (userLoginService.isUserValid(username, password)) {
-				System.out.println("Welcome " + username); // needs fix
+				welcome(username);
 			} else {
-				if (attempts == maxAttempts) {
-					System.out.println("Too many failed login attempts, you are now locked out.");
+				if (attempts == MAX_ATTEMPTS) {
+					userInterface.displayMessage("Too many failed login attempts, you are now locked out.");
 					System.exit(0);
 				}
-				System.out.println("Invalid login, please try again.");
+				userInterface.displayMessage("Invalid login, please try again.");
 			}
+		}
+	}
+
+	private static void welcome(String username) {
+		User user;
+		try {
+			user = userLoginService.getUser(username);
+			userInterface.displayWelcomeMessageTo(user);
+		} catch (Exception e) {
+			userInterface.displayMessage(e.getMessage());
 		}
 	}
 	
